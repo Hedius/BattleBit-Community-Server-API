@@ -35,7 +35,7 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
         if (_vip != null) AnnounceLong($"{_vip.Name} and their team have one the challenge!");
         _vip = null;
     }
-
+    
     public override async Task OnPlayerConnected(MyPlayer player)
     {
         if (CurrentPlayers < NeededPlayers)
@@ -104,8 +104,8 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
         if (player.Team != _vip.Team)
         {
             // Only give them a hammer
-            request.Loadout.PrimaryWeapon.Tool = null;
-            request.Loadout.SecondaryWeapon.Tool = null;
+            request.Loadout.PrimaryWeapon = default;
+            request.Loadout.SecondaryWeapon = default;
             request.Loadout.LightGadget = null;
             request.Loadout.HeavyGadget = Gadgets.SledgeHammer;
             request.Loadout.Throwable = null;
