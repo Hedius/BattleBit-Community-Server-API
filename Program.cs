@@ -81,7 +81,11 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
 
         _vip = players[random.Next(players.Count)];
         // First vip of the round. kill everyone to reconfigure their loadouts.
-        foreach (var player in AllPlayers) player.Kill();
+        foreach (var player in AllPlayers)
+        {
+            player.Kill();
+            // Todo also respawn them automatically
+        }
 
         AnnounceLong($"{_vip.Name} is the VIP!");
     }
