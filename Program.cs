@@ -104,8 +104,8 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
         if (player.Team != _vip.Team)
         {
             // Only give them a hammer
-            request.Loadout.PrimaryWeapon = default;
-            request.Loadout.SecondaryWeapon = default;
+            request.Loadout.PrimaryWeapon.Tool = null;
+            request.Loadout.SecondaryWeapon.Tool = null;
             request.Loadout.LightGadget = null;
             request.Loadout.HeavyGadget = Gadgets.SledgeHammer;
             request.Loadout.Throwable = null;
