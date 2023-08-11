@@ -61,6 +61,7 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
             var tries = 0;
             while (true)
             {
+                // THIS CAN BE OPTIMIZED::... just use a where...
                 var j = random.Next(players.Count);
                 if (players[j].Team != _vip.Team)
                 {
@@ -76,6 +77,7 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
                 }
 
                 _vip = players[j];
+                return;
             }
         }
 
