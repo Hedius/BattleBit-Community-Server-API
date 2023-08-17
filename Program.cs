@@ -7,9 +7,22 @@ class Program
     static void Main(string[] args)
     {
         var listener = new ServerListener<MyPlayer, VipHammerChallengeServer>();
+        listener.OnCreatingGameServerInstance += OnCreatingGameServerInstance;
+        listener.OnCreatingPlayerInstance += OnCreatingPlayerInstance;
         listener.Start(29294);
 
         Thread.Sleep(-1);
+    }
+    
+    
+    private static MyPlayer OnCreatingPlayerInstance()
+    {
+        return new MyPlayer();
+    }
+
+    private static VipHammerChallengeServer OnCreatingGameServerInstance()
+    {
+        return new VipHammerChallengeServer();
     }
 }
 class MyPlayer : Player<MyPlayer>
