@@ -2,9 +2,9 @@
 using BattleBitAPI.Common;
 using BattleBitAPI.Server;
 
-internal class Program
+class Program
 {
-    private static void Main(string[] args)
+    static void Main(string[] args)
     {
         var listener = new ServerListener<MyPlayer, VipHammerChallengeServer>();
         listener.Start(29294);
@@ -12,14 +12,12 @@ internal class Program
         Thread.Sleep(-1);
     }
 }
-
-internal class MyPlayer : Player<MyPlayer>
+class MyPlayer : Player<MyPlayer>
 {
     // ToDo not used..
     public bool IsVIP;
 }
-
-internal class VipHammerChallengeServer : GameServer<MyPlayer>
+class VipHammerChallengeServer : GameServer<MyPlayer>
 {
     private const int NeededPlayers = 6;
     private MyPlayer _vip;
@@ -38,8 +36,8 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
     
     public override async Task OnPlayerConnected(MyPlayer player)
     {
-        if (CurrentPlayers < NeededPlayers)
-            SayToChat($"{player.Name} has joined the server. {CurrentPlayers}/{NeededPlayers} of required players.");
+        if (CurrentPlayerCount < NeededPlayers)
+            SayToChat($"{player.Name} has joined the server. {CurrentPlayerCount}/{NeededPlayers} of required players.");
     }
 
     public override async Task OnPlayerDisconnected(MyPlayer player)
@@ -91,8 +89,8 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
 
         AnnounceLong($"{_vip.Name} is the VIP!");
     }
-
-    public override async Task OnAPlayerKilledAnotherPlayer(OnPlayerKillArguments<MyPlayer> args)
+    
+    public override async Task OnAPlayerDownedAnotherPlayer(OnPlayerKillArguments<MyPlayer> args)
     {
         if (args.Victim == _vip)
         {
@@ -124,15 +122,15 @@ internal class VipHammerChallengeServer : GameServer<MyPlayer>
     {
         if (player == _vip)
         {
-            player.SetRunningSpeedMultiplier(2f);
-            player.SetReceiveDamageMultiplier(0.5f);
-            player.SetGiveDamageMultiplier(4f);
+            player.Modifications.RunningSpeedMultiplier = 2f;
+            player.Modifications.ReceiveDamageMultiplier = 0.5f;
+            player.Modifications.GiveDamageMultiplier = 4f;
         }
         else if (_vip.Team == player.Team)
         {
-            player.SetRunningSpeedMultiplier(0.6f);
-            player.SetReceiveDamageMultiplier(2f);
-            player.SetGiveDamageMultiplier(0.25f);
+            player.Modifications.RunningSpeedMultiplier = 0.6f;
+            player.Modifications.ReceiveDamageMultiplier = 2f;
+            player.Modifications.GiveDamageMultiplier = 0.25f;
             player.Message($"The VIP {player.Name} is in your Team. Protect them! You may use all weapons.");
         }
         else
